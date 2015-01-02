@@ -37,8 +37,11 @@ class jxfind extends oxAdminView
             $sSrcVal = strtoupper($sSrcVal);
         $this->_aViewData["jxfind_srcval"] = $sSrcVal;
 
-        $aResults = $this->_retrieveData($sSrcVal);
-        $this->_aViewData["aResults"] = $aResults;
+        $aProdResults = $this->_retrieveProdData($sSrcVal);
+        $this->_aViewData["aProdResults"] = $aProdResults;
+
+        $aCmsResults = $this->_retrieveCmsData($sSrcVal);
+        $this->_aViewData["aCmsResults"] = $aCmsResults;
 
         $oModule = oxNew('oxModule');
         $oModule->load('jxfind');
@@ -111,7 +114,7 @@ class jxfind extends oxAdminView
     }
 
     
-    private function _retrieveData($sSrcVal)
+    private function _retrieveProdData($sSrcVal)
     {
         /*$myConfig = oxRegistry::get("oxConfig");
         $replaceMRS = $myConfig->getConfigParam("bJxSalesReplaceMRS");
@@ -148,5 +151,35 @@ class jxfind extends oxAdminView
         
         return $aResults;
     }
+
+    
+    private function _retrieveCmsData($sSrcVal)
+    {
+        /*$myConfig = oxRegistry::get("oxConfig");
+        $replaceMRS = $myConfig->getConfigParam("bJxSalesReplaceMRS");
+        $replaceMR = $myConfig->getConfigParam("bJxSalesReplaceMR");*/
+        
+        $sOxvContents = getViewName( 'oxcontents', $this->_iEditLang, $sShopID );
+        
+        $sSql = "SELECT c.oxid AS oxid, c.oxactive AS oxactive, c.oxloadid AS oxloadid, c.oxtitle AS oxtitle, c.oxcontent AS oxcontent "
+                . "FROM $sOxvContents c "
+                . "WHERE c.oxactive = 1 "
+                    . "AND (c.oxtitle LIKE '%$sSrcVal%' "
+                    . "OR c.oxcontent LIKE '%$sSrcVal%' )";
+
+        $aResults = array();
+
+        if ($sSrcVal != "") {
+            $oDb = oxDb::getDb( oxDB::FETCH_MODE_ASSOC );
+            $rs = $oDb->Execute($sSql);
+            while (!$rs->EOF) {
+                array_push($aResults, $rs->fields);
+                $rs->MoveNext();
+            }
+        }
+        
+        return $aResults;
+    }
+    
  }
 ?>
