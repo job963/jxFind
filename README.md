@@ -1,18 +1,25 @@
 # jxFind
 
-*Module for Finding Texts in Products and Content Pages*
+**Module for Finding Texts in Products and Content Pages**
 
-This module shows all products ...
+This module shows all products, categories and CMS pages which are containing the search string in the _title_, _description_, _long description_ or similar fields.
 
 ![show products and customers](/docs/img/displayresults.png)
 
-License
-=========
-This program is free software; you can redistribute it and/or modify it under the terms of the GNU 
-General Public License as published by the Free Software Foundation; either version 3 of the License, 
-or (at your option) any later version.
 
-This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without 
-even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU 
-General Public License for more details. You should have received a copy of the GNU General Public License 
-along with this program; if not, see http://www.gnu.org/licenses/
+## Setup ##
+
+1. Unzip the complete file with all the folder structures and upload the content of the folder copy_this to the root folder of your shop.  
+OR  
+Install the [ioly OXID-Connector](https://github.com/ioly/ioly/tree/connector-oxid) (if you haven't done that already), type _jxfind_ in searchbox and click on ```Install```.  
+
+2. After this navigate in the admin backend of the shop to _Extensions_ - _Modules_. Select the module _jxFind_ and click on `Activate`.
+
+
+If you open the menu _Products_, you will see the the new menu item _Text Finder_.
+
+## Release history ##
+
+- **0.1 - Initial release**
+	- Search for texts in articles, categories and CMS pages 
+	- Support of OXID versions 4.7, 4.8 and 4.9
