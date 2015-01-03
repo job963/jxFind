@@ -10,10 +10,10 @@ $sMetadataVersion = '1.0';
  */
 $aModule = array(
     'id'           => 'jxfind',
-    'title'        => 'jxFind - Text finder for Articles and Content Pages',
+    'title'        => 'jxFind - Text finder for Articles, Categories and Content Pages',
     'description'  => array(
-                        'de' => 'Analyse-Modul für die Ermittlung von Produkten und Käufern.',
-                        'en' => 'Analysis module for finding customers by sold products.'
+                        'de' => 'Text-Finder für die Artikel, Kategories und CMS-Seiten.',
+                        'en' => 'Text finder for Articles, Categories and Content Pages.'
                         ),
     'thumbnail'    => 'jxfind.png',
     'version'      => '0.1',

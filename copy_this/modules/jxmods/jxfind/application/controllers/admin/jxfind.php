@@ -37,11 +37,9 @@ class jxfind extends oxAdminView
             $sSrcVal = strtoupper($sSrcVal);
         $this->_aViewData["jxfind_srcval"] = $sSrcVal;
 
-        $aProdResults = $this->_retrieveProdData($sSrcVal);
-        $this->_aViewData["aProdResults"] = $aProdResults;
-
-        $aCmsResults = $this->_retrieveCmsData($sSrcVal);
-        $this->_aViewData["aCmsResults"] = $aCmsResults;
+        $this->_aViewData["aProdResults"] = $this->_retrieveProdData($sSrcVal);
+        $this->_aViewData["aCatResults"] = $this->_retrieveCatData($sSrcVal);
+        $this->_aViewData["aCmsResults"] = $this->_retrieveCmsData($sSrcVal);
 
         $oModule = oxNew('oxModule');
         $oModule->load('jxfind');
@@ -137,6 +135,36 @@ class jxfind extends oxAdminView
                         . "OR e.oxtags LIKE '%$sSrcVal%' "
                         . "OR e.oxlongdesc LIKE '%$sSrcVal%' "
                     . ")";
+
+        $aResults = array();
+
+        if ($sSrcVal != "") {
+            $oDb = oxDb::getDb( oxDB::FETCH_MODE_ASSOC );
+            $rs = $oDb->Execute($sSql);
+            while (!$rs->EOF) {
+                array_push($aResults, $rs->fields);
+                $rs->MoveNext();
+            }
+        }
+        
+        return $aResults;
+    }
+
+    
+    private function _retrieveCatData($sSrcVal)
+    {
+        /*$myConfig = oxRegistry::get("oxConfig");
+        $replaceMRS = $myConfig->getConfigParam("bJxSalesReplaceMRS");
+        $replaceMR = $myConfig->getConfigParam("bJxSalesReplaceMR");*/
+        
+        $sOxvCategories = getViewName( 'oxcategories', $this->_iEditLang, $sShopID );
+        
+        $sSql = "SELECT c.oxid AS oxid, c.oxactive AS oxactive, c.oxtitle AS oxtitle, c.oxdesc AS oxdesc, c.oxlongdesc AS oxlongdesc "
+                . "FROM $sOxvCategories c "
+                . "WHERE c.oxactive = 1 "
+                    . "AND (c.oxtitle LIKE '%$sSrcVal%' "
+                    . "OR c.oxdesc LIKE '%$sSrcVal%' "
+                    . "OR c.oxlongdesc LIKE '%$sSrcVal%' )";
 
         $aResults = array();
 
