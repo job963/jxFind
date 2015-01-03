@@ -29,56 +29,6 @@ $aModule = array(
         'jxfind.tpl' => 'jxmods/jxfind/application/views/admin/tpl/jxfind.tpl'
                         ),
     'settings'     => array(
-                            /*array(
-                                    'group' => 'JXSALES_DISPLAY', 
-                                    'name'  => 'bJxSalesDisplayEAN', 
-                                    'type'  => 'bool', 
-                                    'value' => 'true'
-                                    ),
-                            array(
-                                    'group' => 'JXSALES_DISPLAY', 
-                                    'name'  => 'bJxSalesDisplayAddress', 
-                                    'type'  => 'bool', 
-                                    'value' => 'true'
-                                    ),
-                            array(
-                                    'group' => 'JXSALES_DISPLAY', 
-                                    'name'  => 'bJxSalesDisplayCountry', 
-                                    'type'  => 'bool', 
-                                    'value' => 'true'
-                                    ),
-                            array(
-                                    'group' => 'JXSALES_REPLACE', 
-                                    'name'  => 'sJxSalesReplaceMRS', 
-                                    'type'  => 'str', 
-                                    'value' => 'Liebe Frau'
-                                    ),
-                            array(
-                                    'group' => 'JXSALES_REPLACE', 
-                                    'name'  => 'sJxSalesReplaceMR', 
-                                    'type'  => 'str', 
-                                    'value' => 'Lieber Herr'
-                                    ),
-                            array(
-                                    'group' => 'JXSALES_DOWNLOAD', 
-                                    'name'  => 'bJxSalesHeader', 
-                                    'type'  => 'bool', 
-                                    'value' => 'true'
-                                    ),
-                            array(
-                                    'group' => 'JXSALES_DOWNLOAD', 
-                                    'name'  => 'sJxSalesSeparator', 
-                                    'type'  => 'select', 
-                                    'value' => 'comma',
-                                    'constrains' => 'comma|semicolon|tab|pipe|tilde', 
-                                    'position' => 0 
-                                    ),
-                            array(
-                                    'group' => 'JXSALES_DOWNLOAD', 
-                                    'name'  => 'bJxSalesQuote', 
-                                    'type'  => 'bool', 
-                                    'value' => 'true'
-                                    ),*/
                         )
     );
 
