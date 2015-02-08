@@ -18,7 +18,7 @@
  *
  * @link      https://github.com/job963/jxSales
  * @license   http://www.gnu.org/licenses/gpl-3.0.html GPL v3 or later
- * @copyright (C) Joachim Barthel 2012-2013 
+ * @copyright (C) Joachim Barthel 2014-2015 
  *
  */
  
@@ -114,10 +114,6 @@ class jxfind extends oxAdminView
     
     private function _retrieveProdData($sSrcVal)
     {
-        /*$myConfig = oxRegistry::get("oxConfig");
-        $replaceMRS = $myConfig->getConfigParam("bJxSalesReplaceMRS");
-        $replaceMR = $myConfig->getConfigParam("bJxSalesReplaceMR");*/
-        
         $sOxvArticles = getViewName( 'oxarticles', $this->_iEditLang, $sShopID );
         $sOxvArtextends = getViewName( 'oxartextends', $this->_iEditLang, $sShopID );
         
@@ -153,10 +149,6 @@ class jxfind extends oxAdminView
     
     private function _retrieveCatData($sSrcVal)
     {
-        /*$myConfig = oxRegistry::get("oxConfig");
-        $replaceMRS = $myConfig->getConfigParam("bJxSalesReplaceMRS");
-        $replaceMR = $myConfig->getConfigParam("bJxSalesReplaceMR");*/
-        
         $sOxvCategories = getViewName( 'oxcategories', $this->_iEditLang, $sShopID );
         
         $sSql = "SELECT c.oxid AS oxid, c.oxactive AS oxactive, c.oxtitle AS oxtitle, c.oxdesc AS oxdesc, c.oxlongdesc AS oxlongdesc "
