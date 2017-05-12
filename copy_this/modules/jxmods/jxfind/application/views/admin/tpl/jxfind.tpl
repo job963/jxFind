@@ -100,8 +100,6 @@ function change_all( name, elem )
                             [{foreach name=lang item=Lang from=$aLangs}]
                                 <option value="[{$Lang.id}]" [{if $Lang.id == $jxfind_lang}]selected="selected"[{/if}]>[{$Lang.title}]</option>
                             [{/foreach}]
-                            [{*<option value="0">Deutsch</option>
-                            <option value="1">English</option>*}]
                         </select>
                     </label>
                 </td>

@@ -16,7 +16,7 @@ $aModule = array(
                         'en' => 'Text finder for Articles, Categories and Content Pages.'
                         ),
     'thumbnail'    => 'jxfind.png',
-    'version'      => '0.2.0',
+    'version'      => '0.2.1',
     'author'       => 'Joachim Barthel',
     'url'          => 'https://github.com/job963/jxFind',
     'email'        => 'jobarthel@gmail.com',
@@ -37,6 +37,6 @@ $aModule = array(
                         ),
     'settings'     => array(
                         )
-    );
+        );
 
 ?>
