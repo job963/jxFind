@@ -83,23 +83,38 @@ function change_all( name, elem )
         <input type="hidden" name="cl" value="jxfind">
         <input type="hidden" name="fnc" value="">
         <input type="hidden" name="oxid" value="[{ $oxid }]">
-        <table width="80%"><tr>
-        <td align="left">
-            <label style="font-weight:bold;">Suchbegriff:</label> <input type="text" name="jxfind_srcval" value="[{ $jxfind_srcval }]">
-            <input type="submit" 
-                onClick="document.forms['jxfind'].elements['fnc'].value = '';" 
-                value=" [{ oxmultilang ident="ORDER_ARTICLE_SEARCH" }] "
-                style="font-weight:bold;" />
-        </td>
-        <td align="right">
-            [{*<input type="submit" value=" [{ oxmultilang ident="ORDER_MAIN_UPDATE_DELPAY" }] " />*}]
-        </td>
-        <td>
-            [{*<input class="edittext" type="submit" 
-                onClick="document.forms['jxfind'].elements['fnc'].value = 'downloadResult';" 
-                value=" [{ oxmultilang ident="JXFIND_DOWNLOAD" }] " [{ $readonly }]>*}]
-        </td>
-        </tr></table>
+        <table [{*width="60%"*}]>
+            <tr>
+                <td align="left">
+                    <label style="font-weight:bold;">Suchbegriff:</label> <input type="text" name="jxfind_srcval" value="[{ $jxfind_srcval }]">
+                    <input type="submit" 
+                        onClick="document.forms['jxfind'].elements['fnc'].value = '';" 
+                        value=" [{ oxmultilang ident="ORDER_ARTICLE_SEARCH" }] "
+                        style="font-weight:bold;" />
+                </td>
+                <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                </td>
+                <td>
+                    <label style="font-weight:bold;">Sprache: 
+                        <select name="jxfind_lang" size="1">
+                            [{foreach name=lang item=Lang from=$aLangs}]
+                                <option value="[{$Lang.id}]" [{if $Lang.id == $jxfind_lang}]selected="selected"[{/if}]>[{$Lang.title}]</option>
+                            [{/foreach}]
+                            [{*<option value="0">Deutsch</option>
+                            <option value="1">English</option>*}]
+                        </select>
+                    </label>
+                </td>
+                <td align="right">
+                    [{*<input type="submit" value=" [{ oxmultilang ident="ORDER_MAIN_UPDATE_DELPAY" }] " />*}]
+                </td>
+                <td>
+                    [{*<input class="edittext" type="submit" 
+                        onClick="document.forms['jxfind'].elements['fnc'].value = 'downloadResult';" 
+                        value=" [{ oxmultilang ident="JXFIND_DOWNLOAD" }] " [{ $readonly }]>*}]
+                </td>
+            </tr>
+        </table>
     </div></p>
 
     [{assign var="oConfig" value=$oViewConf->getConfig()}]

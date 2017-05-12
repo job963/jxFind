@@ -18,7 +18,7 @@
  *
  * @link      https://github.com/job963/jxSales
  * @license   http://www.gnu.org/licenses/gpl-3.0.html GPL v3 or later
- * @copyright (C) Joachim Barthel 2014-2015 
+ * @copyright (C) Joachim Barthel 2014-2017
  *
  */
  
@@ -31,15 +31,21 @@ class jxfind extends oxAdminView
         parent::render();
 
         $sSrcVal = $this->getConfig()->getRequestParameter( 'jxfind_srcval' );
+        $iSrcLang = $this->getConfig()->getRequestParameter( 'jxfind_lang' );
         if (empty($sSrcVal))
             $sSrcVal = "";
         else
             $sSrcVal = strtoupper($sSrcVal);
+        
+        $aLangs = $this->_getLanguages();
+        
         $this->_aViewData["jxfind_srcval"] = $sSrcVal;
+        $this->_aViewData["jxfind_lang"] = $iSrcLang;
+        $this->_aViewData["aLangs"] = $aLangs;
 
-        $this->_aViewData["aProdResults"] = $this->_retrieveProdData($sSrcVal);
-        $this->_aViewData["aCatResults"] = $this->_retrieveCatData($sSrcVal);
-        $this->_aViewData["aCmsResults"] = $this->_retrieveCmsData($sSrcVal);
+        $this->_aViewData["aProdResults"] = $this->_retrieveProdData($sSrcVal, $iSrcLang);
+        $this->_aViewData["aCatResults"] = $this->_retrieveCatData($sSrcVal, $iSrcLang);
+        $this->_aViewData["aCmsResults"] = $this->_retrieveCmsData($sSrcVal, $iSrcLang);
 
         $oModule = oxNew('oxModule');
         $oModule->load('jxfind');
@@ -47,6 +53,25 @@ class jxfind extends oxAdminView
         $this->_aViewData["sModuleVersion"] = $oModule->getInfo('version');
         
         return $this->_sThisTemplate;
+    }
+    
+    
+    
+    private function _getLanguages()
+    {
+        $oConfig = oxRegistry::get('oxConfig');
+        $aConfigLanguageParams = $oConfig->getConfigParam('aLanguageParams');
+        $aConfigLanguages = $oConfig->getConfigParam('aLanguages');
+        
+        $aLanguages = array();
+        foreach ($aConfigLanguageParams as $key => $aConfigLanguageParam) {
+            $aLanguages[] = array('id' => $aConfigLanguageParam['baseId'], 'title' => $aConfigLanguages[$key]);
+        }
+        /*echo '<pre>';
+        print_r($aLanguages);
+        echo '</pre>';*/
+        
+        return $aLanguages;
     }
     
     
@@ -112,10 +137,13 @@ class jxfind extends oxAdminView
     }
 
     
-    private function _retrieveProdData($sSrcVal)
+    private function _retrieveProdData($sSrcVal, $iSrcLang)
     {
-        $sOxvArticles = getViewName( 'oxarticles', $this->_iEditLang, $sShopID );
-        $sOxvArtextends = getViewName( 'oxartextends', $this->_iEditLang, $sShopID );
+        //echo $this->_iEditLang;
+        //$sOxvArticles = getViewName( 'oxarticles', $this->_iEditLang, $sShopID );
+        //$sOxvArtextends = getViewName( 'oxartextends', $this->_iEditLang, $sShopID );
+        $sOxvArticles = getViewName( 'oxarticles', $iSrcLang, $sShopID );
+        $sOxvArtextends = getViewName( 'oxartextends', $iSrcLang, $sShopID );
         
         $sSql = "SELECT a.oxid AS oxid, a.oxactive As oxactive, a.oxartnum AS oxartnum, a.oxtitle AS oxtitle, a.oxvarselect AS oxvarselect, "
                 . "a.oxshortdesc AS oxshortdesc, a.oxsearchkeys AS oxsearchkeys, e.oxtags AS oxtags, e.oxlongdesc AS oxlongdesc "
@@ -147,9 +175,10 @@ class jxfind extends oxAdminView
     }
 
     
-    private function _retrieveCatData($sSrcVal)
+    private function _retrieveCatData($sSrcVal, $iSrcLang)
     {
-        $sOxvCategories = getViewName( 'oxcategories', $this->_iEditLang, $sShopID );
+        //$sOxvCategories = getViewName( 'oxcategories', $this->_iEditLang, $sShopID );
+        $sOxvCategories = getViewName( 'oxcategories', $iSrcLang, $sShopID );
         
         $sSql = "SELECT c.oxid AS oxid, c.oxactive AS oxactive, c.oxtitle AS oxtitle, c.oxdesc AS oxdesc, c.oxlongdesc AS oxlongdesc "
                 . "FROM $sOxvCategories c "
@@ -173,13 +202,14 @@ class jxfind extends oxAdminView
     }
 
     
-    private function _retrieveCmsData($sSrcVal)
+    private function _retrieveCmsData($sSrcVal, $iSrcLang)
     {
         /*$myConfig = oxRegistry::get("oxConfig");
         $replaceMRS = $myConfig->getConfigParam("bJxSalesReplaceMRS");
         $replaceMR = $myConfig->getConfigParam("bJxSalesReplaceMR");*/
         
-        $sOxvContents = getViewName( 'oxcontents', $this->_iEditLang, $sShopID );
+        //$sOxvContents = getViewName( 'oxcontents', $this->_iEditLang, $sShopID );
+        $sOxvContents = getViewName( 'oxcontents', $iSrcLang, $sShopID );
         
         $sSql = "SELECT c.oxid AS oxid, c.oxactive AS oxactive, c.oxloadid AS oxloadid, c.oxtitle AS oxtitle, c.oxcontent AS oxcontent "
                 . "FROM $sOxvContents c "
@@ -202,4 +232,4 @@ class jxfind extends oxAdminView
     }
     
  }
-?>
+ 
