@@ -4,7 +4,7 @@
 
 This module shows all products, categories and CMS pages which are containing the search string in the _title_, _description_, _long description_ or similar fields.
 
-![show products and customers](/docs/img/jxfind-results-de-r75.png)
+![show products and customers](/docs/img/jxfind-results-de.png)
 
 
 ## Setup ##
