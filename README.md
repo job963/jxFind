@@ -1,15 +1,15 @@
 # jxFind
 
-**Module for Finding Texts in Products and Content Pages**
+**Module for Finding Texts in Products, Categories and Content Pages**
 
 This module shows all products, categories and CMS pages which are containing the search string in the _title_, _description_, _long description_ or similar fields.
 
-![show products and customers](/docs/img/displayresults.png)
+![show products and customers](/docs/img/jxfind-results-de-r75.png)
 
 
 ## Setup ##
 
-1. Unzip the complete file with all the folder structures and upload the content of the folder copy_this to the root folder of your shop.  
+1. Unzip the complete file with all the folder structures and upload the content of the folder _copy_this_ to the root folder of your shop.  
 OR  
 Install the [ioly OXID-Connector](https://github.com/ioly/ioly/tree/connector-oxid) (if you haven't done that already), type _jxfind_ in searchbox and click on ```Install```.  
 
@@ -17,6 +17,7 @@ Install the [ioly OXID-Connector](https://github.com/ioly/ioly/tree/connector-ox
 
 If you open the menu _Products_, you will see the the new menu item _Text Finder_.
 
+### Optional Steps ###
 If you want to use the searchbox in the headbar, you have to modify the file header.tpl in the folder /application/views/admin/tpl. If you use the original admin theme, you can use the changed file from the folder changed_full. Otherwise insert at the end of the ```<ul>...</ul>``` block before the ```</ul>``` line the following code
 ```
 [{block name="admin_header_inclinks"}]
@@ -53,3 +54,10 @@ If you use the module *ocb_cleartmp*, do the following steps.
 	- Old code removed
 	- New block definition to header.tpl added
 	- Searchbox as block in headbar
+
+- **0.2.0 - Language support**
+	- All languages are searchable now (only first language before)
+
+- **0.2.1 - Bug fixing**
+	- Small translation error fixed
+	- Modified origin template header.tpl moved to folder changed_full
