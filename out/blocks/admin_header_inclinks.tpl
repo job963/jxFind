@@ -1,4 +1,4 @@
-[{$smarty.block.parent}]
+    
     <li class="sep">
         <form method="post" action="[{$oViewConf->getSelfLink()}]" id="jxfind" target="basefrm">
             <input type="hidden" name="cl" value="jxfind" />

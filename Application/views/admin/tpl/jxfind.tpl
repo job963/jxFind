@@ -86,7 +86,7 @@ function change_all( name, elem )
         <table [{*width="60%"*}]>
             <tr>
                 <td align="left">
-                    <label style="font-weight:bold;">Suchbegriff:</label> <input type="text" name="jxfind_srcval" value="[{ $jxfind_srcval }]">
+                    <label style="font-weight:bold;">[{ oxmultilang ident="JXFIND_SEARCHTEXT" }]:</label> <input type="text" name="jxfind_srcval" value="[{ $jxfind_srcval }]">
                     <input type="submit" 
                         onClick="document.forms['jxfind'].elements['fnc'].value = '';" 
                         value=" [{ oxmultilang ident="ORDER_ARTICLE_SEARCH" }] "
@@ -95,7 +95,7 @@ function change_all( name, elem )
                 <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 </td>
                 <td>
-                    <label style="font-weight:bold;">Sprache: 
+                    <label style="font-weight:bold;">[{ oxmultilang ident="JXFIND_LANGUAGE" }]: 
                         <select name="jxfind_lang" size="1">
                             [{foreach name=lang item=Lang from=$aLangs}]
                                 <option value="[{$Lang.id}]" [{if $Lang.id == $jxfind_lang}]selected="selected"[{/if}]>[{$Lang.title}]</option>
@@ -152,7 +152,7 @@ function change_all( name, elem )
                 [{foreach name=outer item=Result from=$aProdResults}]
                     <tr>
                         [{ cycle values="listitem,listitem2" assign="listclass" }]
-                        <td valign="top" class="[{$listclass}][{ if $Result.oxactive == 1}] active[{/if}]" height="15">
+                        <td valign="top" class="[{$listclass}][{if $Result.oxactive == 1}] active[{/if}]" height="15">
                             <div class="listitemfloating">&nbsp</a></div>
                         </td>
                         <td class="[{$listclass}]">
@@ -227,7 +227,7 @@ function change_all( name, elem )
                 [{foreach name=outer item=Result from=$aCatResults}]
                     <tr>
                         [{ cycle values="listitem,listitem2" assign="listclass" }]
-                        <td valign="top" class="[{$listclass}][{ if $Result.oxactive == 1}] active[{/if}]" height="15">
+                        <td valign="top" class="[{$listclass}][{if $Result.oxactive == 1}] active[{/if}]" height="15">
                             <div class="listitemfloating">&nbsp</a></div>
                         </td>
                         <td class="[{$listclass}]">
@@ -282,7 +282,7 @@ function change_all( name, elem )
                 [{foreach name=outer item=Result from=$aCmsResults}]
                     <tr>
                         [{ cycle values="listitem,listitem2" assign="listclass" }]
-                        <td valign="top" class="[{$listclass}][{ if $Result.oxactive == 1}] active[{/if}]" height="15">
+                        <td valign="top" class="[{$listclass}][{if $Result.oxactive == 1}] active[{/if}]" height="15">
                             <div class="listitemfloating">&nbsp</a></div>
                         </td>
                         <td class="[{$listclass}]">
