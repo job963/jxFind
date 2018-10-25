@@ -2,7 +2,11 @@
     "name": "jxmods/jxfind",
     "description": "jxFind - Text Finder for Articles, Categories and Content Pages",
     "type": "oxideshop-module",
-    "keywords": ["oxid", "modules", "eShop"],
+    "keywords": [
+        "oxid", 
+        "modules", 
+        "admin"
+    ],
     "homepage": "https://github.com/job963/jxFind",
     "authors": [
         {

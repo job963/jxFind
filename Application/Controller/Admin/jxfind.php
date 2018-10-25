@@ -34,26 +34,27 @@ use OxidEsales\Eshop\Core\TableViewNameGenerator;
 
 class JxFind extends AdminDetailsController
 {
-    //-protected $_sThisTemplate = "jxfind.tpl";
 
     /**
-     * Displays the entries of database table oxconfig as readable table
+     * Find search text in Articles, Categories and CMS Pages
      * 
      * @return string Filename of template file
      */
     public function render()
     {
-        //-parent::render();
 
         /**
          * @var Request $request 
          */
         $request = Registry::getRequest();
 
-        //-$sSrcVal = $this->getConfig()->getRequestParameter( 'jxfind_srcval' );
-        //-$iSrcLang = $this->getConfig()->getRequestParameter( 'jxfind_lang' );
-        $jxSearchValue = $request->getParameter( 'jxfind_srcval' );
-        $jxSearchLang = $request->getParameter( 'jxfind_lang' );
+        /**
+         * @var Module $module
+         */
+        $module = oxNew(Module::class);
+
+        $jxSearchValue = $request->getRequestParameter( 'jxfind_srcval' );
+        $jxSearchLang = $request->getRequestParameter( 'jxfind_lang' );
         if (empty($jxSearchValue))
             $jxSearchValue = "";
         else
@@ -65,31 +66,28 @@ class JxFind extends AdminDetailsController
         $this->_aViewData["jxfind_lang"] = $jxSearchLang;
         $this->_aViewData["aLangs"] = $aLangs;
 
-        $this->_aViewData["aProdResults"] = $this->_findProductData( $jxSearchValue, $jxSearchLang );
-        $this->_aViewData["aCatResults"] = $this->_findCategoryData( $jxSearchValue, $jxSearchLang );
-        $this->_aViewData["aCmsResults"] = $this->_findCmsPageData( $jxSearchValue, $jxSearchLang );
+        $this->_aViewData["aProdResults"] = $this->_findProducts( $jxSearchValue, $jxSearchLang );
+        $this->_aViewData["aCatResults"] = $this->_findCategories( $jxSearchValue, $jxSearchLang );
+        $this->_aViewData["aCmsResults"] = $this->_findCmsPages( $jxSearchValue, $jxSearchLang );
 
-        //-$oModule = oxNew('oxModule');
-        //-$oModule->load('jxfind');
-        //-$this->_aViewData["sModuleId"] = $oModule->getId();
-        //-$this->_aViewData["sModuleVersion"] = $oModule->getInfo('version');
         $module->load( 'jxfind' );
         $this->_aViewData['sModuleId'] = $module->getId();
         $this->_aViewData['sModuleVersion'] = $module->getInfo('version');
         
         parent::render();
         
-        //-return $this->_sThisTemplate;
         return "jxfind.tpl";
     }
     
     
     
+    /**
+     * Gets all languages of the shop
+     * 
+     * @return array 
+     */
     private function _getAllLanguages()
     {
-        //-$oConfig = oxRegistry::get('oxConfig');
-        //-$aConfigLanguageParams = $oConfig->getConfigParam('aLanguageParams');
-        //-$aConfigLanguages = $oConfig->getConfigParam('aLanguages');
         $aConfigLanguageParams = $this->getConfig()->getConfigParam( 'aLanguageParams' );
         $aConfigLanguages = $this->getConfig()->getConfigParam( 'aLanguages' );
         
@@ -97,9 +95,6 @@ class JxFind extends AdminDetailsController
         foreach ($aConfigLanguageParams as $key => $aConfigLanguageParam) {
             $aLanguages[] = array('id' => $aConfigLanguageParam['baseId'], 'title' => $aConfigLanguages[$key]);
         }
-        /*echo '<pre>';
-        print_r($aLanguages);
-        echo '</pre>';*/
         
         return $aLanguages;
     }
@@ -108,8 +103,6 @@ class JxFind extends AdminDetailsController
     // not used at the moment
     public function downloadResult()
     {
-        //-$myConfig = oxRegistry::get("oxConfig");
-        //-switch ( $myConfig->getConfigParam("sJxSalesSeparator") ) {
         switch ( $this->getConfig()->getConfigParam( 'sJxSalesSeparator' ) ) {
             case 'comma':
                 $sSep = ',';
@@ -130,18 +123,12 @@ class JxFind extends AdminDetailsController
                 $sSep = ',';
                 break;
         }
-        //-if ( $myConfig->getConfigParam("bJxSalesQuote") ) {
         if ( $this->getConfig()->getConfigParam( 'bJxSalesQuote' ) ) {
             $sBegin = '"';
             $sSep   = '"' . $sSep . '"';
             $sEnd   = '"';
         }
         
-        /*$sSrcVal = oxConfig::getParameter( "jxsales_srcval" ); 
-        if (empty($sSrcVal))
-            $sSrcVal = "";
-        else
-            $sSrcVal = strtoupper($sSrcVal);*/
         $jxSearchValue = $request->getParameter( 'jxfind_srcval' );
         if (empty($jxSearchValue))
             $jxSearchValue = "";
@@ -151,11 +138,9 @@ class JxFind extends AdminDetailsController
         $aOrders = array();
         $aOrders = $this->_retrieveData($sSrcVal);
 
-        //-$aOxid = oxConfig::getParameter( "jxsales_oxid" ); 
         $aOxid = $request->getParameter( 'jxsales_oxid' ); 
         
         $sContent = '';
-        //-if ( $myConfig->getConfigParam("bJxSalesHeader") ) {
         if ( $this->getConfig()->getConfigParam( 'bJxSalesHeader' ) ) {
             $aHeader = array_keys($aOrders[0]);
             $sContent .= $sBegin . implode($sSep, $aHeader) . $sEnd . chr(13);
@@ -185,16 +170,18 @@ class JxFind extends AdminDetailsController
      * 
      * @return array Findings in articles
      */
-    private function _findProductData($sSrcVal, $iSrcLang)
+    private function _findProducts($sSrcVal, $iSrcLang)
     {
-        //echo $this->_iEditLang;
-        //$sOxvArticles = getViewName( 'oxarticles', $this->_iEditLang, $sShopID );
-        //$sOxvArtextends = getViewName( 'oxartextends', $this->_iEditLang, $sShopID );
-        $oxvArticles = TableViewNameGenerator::getViewName( 'oxarticles', $iSrcLang, $sShopID );
-        $oxvArtextends = TableViewNameGenerator::getViewName( 'oxartextends', $iSrcLang, $sShopID );
+        $oxvArticles = getViewName( 'oxarticles', $iSrcLang );
+        $oxvArtextends = getViewName( 'oxartextends', $iSrcLang );
+        
+        $limit = "0, 100 ";
+        if (empty($sSrcVal)) {
+            $limit = "0,0 ";
+        }
         
         $sSql = "SELECT a.oxid AS oxid, a.oxactive As oxactive, a.oxartnum AS oxartnum, a.oxtitle AS oxtitle, a.oxvarselect AS oxvarselect, "
-                . "a.oxshortdesc AS oxshortdesc, a.oxsearchkeys AS oxsearchkeys, e.oxtags AS oxtags, e.oxlongdesc AS oxlongdesc "
+                . "a.oxshortdesc AS oxshortdesc, a.oxsearchkeys AS oxsearchkeys, e.oxlongdesc AS oxlongdesc "
                 . "FROM $oxvArticles a, $oxvArtextends e "
                 . "WHERE "
                     . "a.oxid = e.oxid "
@@ -204,23 +191,10 @@ class JxFind extends AdminDetailsController
                         . "OR a.oxvarselect LIKE '%$sSrcVal%' "
                         . "OR a.oxshortdesc LIKE '%$sSrcVal%' "
                         . "OR a.oxsearchkeys LIKE '%$sSrcVal%' "
-                        . "OR e.oxtags LIKE '%$sSrcVal%' "
                         . "OR e.oxlongdesc LIKE '%$sSrcVal%' "
-                    . ")";
-
-        /*$aResults = array();
-
-        if ($sSrcVal != "") {
-            $oDb = oxDb::getDb( oxDB::FETCH_MODE_ASSOC );
-            $rs = $oDb->Execute($sSql);
-            while (!$rs->EOF) {
-                array_push($aResults, $rs->fields);
-                $rs->MoveNext();
-            }
-        }*/
+                    . ") "
+                . "LIMIT " . $limit;
         
-        //-return $aResults;
-        // return found articles
         return $this->_fetchAllRecords($sSql);
     }
 
@@ -233,31 +207,23 @@ class JxFind extends AdminDetailsController
      * 
      * @return array Findings in categories
      */
-    private function _findCategoryData($sSrcVal, $iSrcLang)
+    private function _findCategories($sSrcVal, $iSrcLang)
     {
-        //$sOxvCategories = getViewName( 'oxcategories', $this->_iEditLang, $sShopID );
-        $oxvCategories = TableViewNameGenerator::getViewName( 'oxcategories', $iSrcLang, $sShopID );
+        $oxvCategories = getViewName( 'oxcategories', $iSrcLang );
         
+        $limit = "0, 100 ";
+        if (empty($sSrcVal)) {
+            $limit = "0,0 ";
+        }
+
         $sSql = "SELECT c.oxid AS oxid, c.oxactive AS oxactive, c.oxtitle AS oxtitle, c.oxdesc AS oxdesc, c.oxlongdesc AS oxlongdesc "
                 . "FROM $oxvCategories c "
                 . "WHERE c.oxactive = 1 "
                     . "AND (c.oxtitle LIKE '%$sSrcVal%' "
                     . "OR c.oxdesc LIKE '%$sSrcVal%' "
-                    . "OR c.oxlongdesc LIKE '%$sSrcVal%' )";
+                    . "OR c.oxlongdesc LIKE '%$sSrcVal%' ) "
+                . "LIMIT " . $limit;
 
-        /*$aResults = array();
-
-        if ($sSrcVal != "") {
-            $oDb = oxDb::getDb( oxDB::FETCH_MODE_ASSOC );
-            $rs = $oDb->Execute($sSql);
-            while (!$rs->EOF) {
-                array_push($aResults, $rs->fields);
-                $rs->MoveNext();
-            }
-        }*/
-        
-        //-return $aResults;
-        // return found categories
         return $this->_fetchAllRecords($sSql);
     }
 
@@ -270,34 +236,22 @@ class JxFind extends AdminDetailsController
      * 
      * @return array Findings in CMS pages
      */
-    private function _findCmsPageData($sSrcVal, $iSrcLang)
+    private function _findCmsPages($sSrcVal, $iSrcLang)
     {
-        /*$myConfig = oxRegistry::get("oxConfig");
-        $replaceMRS = $myConfig->getConfigParam("bJxSalesReplaceMRS");
-        $replaceMR = $myConfig->getConfigParam("bJxSalesReplaceMR");*/
+        $oxvContents = getViewName( 'oxcontents', $iSrcLang );
         
-        //$sOxvContents = getViewName( 'oxcontents', $this->_iEditLang, $sShopID );
-        $oxvContents = TableViewNameGenerator::getViewName( 'oxcontents', $iSrcLang, $sShopID );
-        
+        $limit = "0, 100 ";
+        if (empty($sSrcVal)) {
+            $limit = "0,0 ";
+        }
+
         $sSql = "SELECT c.oxid AS oxid, c.oxactive AS oxactive, c.oxloadid AS oxloadid, c.oxtitle AS oxtitle, c.oxcontent AS oxcontent "
                 . "FROM $oxvContents c "
                 . "WHERE c.oxactive = 1 "
                     . "AND (c.oxtitle LIKE '%$sSrcVal%' "
-                    . "OR c.oxcontent LIKE '%$sSrcVal%' )";
+                    . "OR c.oxcontent LIKE '%$sSrcVal%' ) "
+                . "LIMIT " . $limit;
 
-        /*$aResults = array();
-
-        if ($sSrcVal != "") {
-            $oDb = oxDb::getDb( oxDB::FETCH_MODE_ASSOC );
-            $rs = $oDb->Execute($sSql);
-            while (!$rs->EOF) {
-                array_push($aResults, $rs->fields);
-                $rs->MoveNext();
-            }
-        }*/
-        
-        //-return $aResults;
-        // return found CMS pages
         return $this->_fetchAllRecords($sSql);
     }
     

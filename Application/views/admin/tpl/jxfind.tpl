@@ -119,13 +119,12 @@ function change_all( name, elem )
     
     <div id="liste">
     [{if $aProdResults|@count > 0 }]
-        <h2>[{ oxmultilang ident="GENERAL_ITEM" }]</h2>
+        <h2>&nbsp;[{ oxmultilang ident="GENERAL_ITEM" }]</h2>
         <table cellspacing="0" cellpadding="0" border="0" width="99%">
             <colgroup>
                 <col width="3%" />
                 <col width="10%" />
                 <col width="10%" />
-                <col width="15%" />
                 <col width="15%" />
                 <col width="15%" />
                 <col width="15%" />
@@ -141,14 +140,13 @@ function change_all( name, elem )
                     <td class="listfilter" style="[{$headStyle}]"><div class="r1"><div class="b1">[{ oxmultilang ident="JXFIND_VARIANT" }]</div></div></td>
                     <td class="listfilter" style="[{$headStyle}]"><div class="r1"><div class="b1">[{ oxmultilang ident="ARTICLE_MAIN_SHORTDESC" }]</div></div></td>
                     <td class="listfilter" style="[{$headStyle}]"><div class="r1"><div class="b1">[{ oxmultilang ident="ARTICLE_MAIN_SEARCHKEYS" }]</div></div></td>
-                    <td class="listfilter" style="[{$headStyle}]"><div class="r1"><div class="b1">[{ oxmultilang ident="ARTICLE_MAIN_TAGS" }]</div></div></td>
                     <td class="listfilter" style="[{$headStyle}]"><div class="r1"><div class="b1">[{ oxmultilang ident="GENERAL_DESCRIPTION" }]</div></div></td>
                     [{*<td class="listfilter" style="[{$headStyle}]" align="center"><div class="r1"><div class="b1"><input type="checkbox" onclick="change_all('jxfind_oxid[]', this)"></div></div></td>*}]
                 </tr>
 
                 [{ assign var="actArtTitle" value="..." }]
                 [{ assign var="actArtVar" value="..." }]
-                [{ assign var="styleLargeCols" value="max-width:150px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;" }]
+                [{ assign var="styleLargeCols" value="max-width:200px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;" }]
                 [{foreach name=outer item=Result from=$aProdResults}]
                     <tr>
                         [{ cycle values="listitem,listitem2" assign="listclass" }]
@@ -182,11 +180,6 @@ function change_all( name, elem )
                         </td>
                         <td class="[{$listclass}]">
                             <a href="Javascript:editThis('[{$Result.oxid}]','article');" title="[{ oxmultilang ident="JXFIND_GOTOPRODUCT" }]">
-                               <div style="[{$styleLargeCols}][{if $Result.oxtags|upper|strstr:$jxfind_srcval}]color:blue;[{/if}]">[{$Result.oxtags}]</div>
-                            </a>
-                        </td>
-                        <td class="[{$listclass}]">
-                            <a href="Javascript:editThis('[{$Result.oxid}]','article');" title="[{ oxmultilang ident="JXFIND_GOTOPRODUCT" }]">
                                <div style="[{$styleLargeCols}][{if $Result.oxlongdesc|upper|strstr:$jxfind_srcval}]color:blue;[{/if}]">[{$Result.oxlongdesc|strip_tags}]</div>
                             </a>
                         </td>
@@ -204,7 +197,7 @@ function change_all( name, elem )
 
     [{if $aCatResults|@count > 0 }]
         <hr>
-        <h2>[{ oxmultilang ident="CATEGORY_LIST_MENUSUBITEM" }]</h2>
+        <h2>&nbsp;[{ oxmultilang ident="CATEGORY_LIST_MENUSUBITEM" }]</h2>
         <table cellspacing="0" cellpadding="0" border="0" width="99%">
             <colgroup>
             <col width="3%" />
@@ -259,7 +252,7 @@ function change_all( name, elem )
 
     [{if $aCmsResults|@count > 0 }]
         <hr>
-        <h2>[{ oxmultilang ident="CONTENT_LIST_MENUSUBITEM" }]</h2>
+        <h2>&nbsp;[{ oxmultilang ident="CONTENT_LIST_MENUSUBITEM" }]</h2>
         <table cellspacing="0" cellpadding="0" border="0" width="99%">
             <colgroup>
                 <col width="3%" />
@@ -278,7 +271,7 @@ function change_all( name, elem )
                     <td class="listfilter" style="[{$headStyle}]"><div class="r1"><div class="b1">[{ oxmultilang ident="GENERAL_DESCRIPTION" }]</div></div></td>
                     [{*<td class="listfilter" style="[{$headStyle}]" align="center"><div class="r1"><div class="b1"><input type="checkbox" onclick="change_all('jxfind_oxid[]', this)"></div></div></td>*}]
                 </tr>
-                [{ assign var="styleLargeCols" value="max-width:250px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;" }]
+                [{ assign var="styleLargeCols" value="max-width:500px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;" }]
                 [{foreach name=outer item=Result from=$aCmsResults}]
                     <tr>
                         [{ cycle values="listitem,listitem2" assign="listclass" }]
