@@ -2,12 +2,28 @@
 
 **Module for Finding Texts in Products, Categories and Content Pages**
 
-This module shows all products, categories and CMS pages which are containing the search string in the _title_, _description_, _long description_ or similar fields.
+This module shows all products, categories and CMS pages which are containing the search string in the 
+_title_, _description_, _long description_ or similar fields.
 
 ![show products and customers](/docs/img/jxfind-results-de.png)
 
 
-## Setup ##
+## OXID eShop Versions
+
+The module is available for the following versions
+  * **OXID eShop 6** (actual module version)
+  * OXID eShop 4.x / 5.x ([download here](https://github.com/job963/jxFind/tree/oxid-4x))
+
+## Setup
+
+### OXID eShop 6
+
+    composer config repo.JxMods/JxFind git https://github.com/job953/jxfind.git
+
+    composer require jxmods/jxfind
+
+
+### OXID eShop 4/5
 
 1. Unzip the complete file with all the folder structures and upload the content of the folder _copy_this_ to the root folder of your shop.  
 OR  
@@ -17,7 +33,8 @@ Install the [ioly OXID-Connector](https://github.com/ioly/ioly/tree/connector-ox
 
 If you open the menu _Products_, you will see the the new menu item _Text Finder_.
 
-### Optional Steps ###
+
+### Optional Steps
 If you want to use the searchbox in the headbar, you have to modify the file header.tpl in the folder /application/views/admin/tpl. If you use the original admin theme, you can use the changed file from the folder changed_full. Otherwise insert at the end of the ```<ul>...</ul>``` block before the ```</ul>``` line the following code
 ```
 [{block name="admin_header_inclinks"}]
