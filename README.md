@@ -18,20 +18,20 @@ The module is available for the following versions
 
 ### OXID eShop 6
 
-    composer config repo.JxMods/JxFind git https://github.com/job953/jxfind.git
+1. Install the module  
+    ```composer config repo.JxMods/JxFind git https://github.com/job953/jxfind.git```
 
-    composer require jxmods/jxfind
+    ```composer require jxmods/jxfind```
 
+2. Activate the module  
+Navigate in the admin backend of the shop to _Extensions_ - _Modules_.  
+Select the module _jxFind_ and click on `Activate`.
+
+If you open the menu _Products_, you will see the the new menu item _Text Finder_.
 
 ### OXID eShop 4/5
 
-1. Unzip the complete file with all the folder structures and upload the content of the folder _copy_this_ to the root folder of your shop.  
-OR  
-Install the [ioly OXID-Connector](https://github.com/ioly/ioly/tree/connector-oxid) (if you haven't done that already), type _jxfind_ in searchbox and click on ```Install```.  
-
-2. After this navigate in the admin backend of the shop to _Extensions_ - _Modules_. Select the module _jxFind_ and click on `Activate`.
-
-If you open the menu _Products_, you will see the the new menu item _Text Finder_.
+Goto branch [oxid-4x](https://github.com/job963/jxFind/tree/oxid-4x) and follow the instructions there.
 
 
 ### Optional Steps

@@ -35,13 +35,13 @@ $aModule = array(
                         'jxfind' => 'jxmods/jxfind/application/controllers/admin/jxfind.php'
                         ),
     'templates'    => array(
-                        'jxfind.tpl' => 'jxmods/jxfind/application/views/admin/tpl/jxfind.tpl'
+                        'jxfind.tpl' => 'jxmods/jxfind/Application/views/admin/tpl/jxfind.tpl'
                         ),
     'blocks'       => array(
                         array(
                             'template' => 'header.tpl', 
                             'block'    => 'admin_header_inclinks',                     
-                            'file'     => '/out/blocks/admin_header_inclinks.tpl'
+                            'file'     => '/Application/views/admin/blocks/admin_header_inclinks.tpl'
                           )
                         ),
     'settings'     => array(

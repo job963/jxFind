@@ -129,7 +129,7 @@ class JxFind extends AdminDetailsController
             $sEnd   = '"';
         }
         
-        $jxSearchValue = $request->getParameter( 'jxfind_srcval' );
+        $jxSearchValue = $request->getRequestParameter( 'jxfind_srcval' );
         if (empty($jxSearchValue))
             $jxSearchValue = "";
         else
@@ -138,7 +138,7 @@ class JxFind extends AdminDetailsController
         $aOrders = array();
         $aOrders = $this->_retrieveData($sSrcVal);
 
-        $aOxid = $request->getParameter( 'jxsales_oxid' ); 
+        $aOxid = $request->getRequestParameter( 'jxsales_oxid' ); 
         
         $sContent = '';
         if ( $this->getConfig()->getConfigParam( 'bJxSalesHeader' ) ) {

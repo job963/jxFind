@@ -3,7 +3,7 @@
 ## Release history
 
 ### 0.3.0 - OXID 6 Compatibility
-  * Upgrade to OXID 6.x compatibility
+  * Upgrade for OXID 6.x compatibility
 
 ### 0.2.1 - Bug fixing
   * Small translation error fixed
